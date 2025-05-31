@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In-depth Competitor Analysis Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f3f0; }
+        .tab-active { border-color: #3b82f6; color: #3b82f6; background-color: #eff6ff; }
+        .tab-inactive { border-color: transparent; color: #4b5563; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .table-sortable th { cursor: pointer; }
+        .table-sortable th:hover { background-color: #e5e7eb; }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 350px; max-height: 450px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .modal-bg {
+            background-color: rgba(0,0,0,0.5);
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">In-depth Competitor Analysis</h1>
+            <p class="mt-2 text-lg text-gray-600">Window & Glass Fixing Market (Farnborough & Camberley, UK)</p>
+        </header>
+
+        <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+            <nav class="flex flex-wrap border-b border-gray-200 mb-6">
+                <button class="nav-tab text-sm sm:text-base font-semibold py-3 px-4 border-b-2 tab-active" data-tab="overview">
+                    <span class="mr-2">📊</span>Overview
+                </button>
+                <button class="nav-tab text-sm sm:text-base font-semibold py-3 px-4 border-b-2 tab-inactive" data-tab="table">
+                    <span class="mr-2">📋</span>Competitor Data
+                </button>
+                <button class="nav-tab text-sm sm:text-base font-semibold py-3 px-4 border-b-2 tab-inactive" data-tab="visuals">
+                    <span class="mr-2">📈</span>Visual Insights
+                </button>
+                <button class="nav-tab text-sm sm:text-base font-semibold py-3 px-4 border-b-2 tab-inactive" data-tab="opportunities">
+                    <span class="mr-2">💡</span>Strategic Opportunities
+                </button>
+            </nav>
+
+            <main>
+                <section id="overview" class="content-section active">
+                    <div class="animate-fade-in">
+                        <h2 class="text-2xl font-bold mb-1 text-gray-900">Competitive Landscape Overview</h2>
+                        <p class="mb-6 text-gray-600">This section provides a summary of the competitive environment for window and glass fixing services in Farnborough and Camberley. It highlights key characteristics of the market and sets the stage for a deeper dive into individual competitors.</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-blue-50 p-6 rounded-lg shadow-sm">
+                                <h3 class="font-bold text-lg text-blue-800">Average Competitor Rating</h3>
+                                <p class="text-3xl font-bold text-blue-900 mt-2">9.85 / 10</p>
+                                <p class="text-sm text-blue-700 mt-1">Indicates high customer satisfaction is standard.</p>
+                            </div>
+                            <div class="bg-green-50 p-6 rounded-lg shadow-sm">
+                                <h3 class="font-bold text-lg text-green-800">Competitors with 10/10 Rating</h3>
+                                <p class="text-3xl font-bold text-green-900 mt-2">4 Businesses</p>
+                                <p class="text-sm text-green-700 mt-1">Demonstrates strong competition at the top tier.</p>
+                            </div>
+                            <div class="bg-yellow-50 p-6 rounded-lg shadow-sm">
+                                <h3 class="font-bold text-lg text-yellow-800">Common USP Theme</h3>
+                                <p class="text-3xl font-bold text-yellow-900 mt-2">"Repair, Not Replace"</p>
+                                <p class="text-sm text-yellow-700 mt-1">Focus on cost-saving and eco-friendly solutions.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                             <h3 class="text-xl font-bold mb-4 text-gray-800">Market Characteristics</h3>
+                             <div class="space-y-4">
+                                <div class="p-4 bg-white rounded-md shadow-sm">
+                                    <h4 class="font-semibold text-gray-700">High Customer Satisfaction</h4>
+                                    <p class="text-sm text-gray-600">The majority of established competitors maintain very high customer ratings, setting a high bar for new entrants.</p>
+                                </div>
+                                <div class="p-4 bg-white rounded-md shadow-sm">
+                                    <h4 class="font-semibold text-gray-700">Experience & Guarantees</h4>
+                                    <p class="text-sm text-gray-600">Many firms boast decades of experience and offer extensive guarantees, building significant customer trust.</p>
+                                </div>
+                                 <div class="p-4 bg-white rounded-md shadow-sm">
+                                    <h4 class="font-semibold text-gray-700">Emergency Services & Specialization</h4>
+                                    <p class="text-sm text-gray-600">Several competitors offer 24/7 emergency services or specialize in particular niches (e.g., locksmithing with glazing, sash windows).</p>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="table" class="content-section">
+                    <div class="animate-fade-in">
+                        <h2 class="text-2xl font-bold mb-1 text-gray-900">Detailed Competitor Data</h2>
+                        <p class="mb-6 text-gray-600">This table provides a comprehensive list of local competitors with their ratings, services, unique selling propositions (USPs), and potential weaknesses. Click on any row to view more details about a specific business. Use the search bar to filter by name or service.</p>
+
+                        <div class="mb-4">
+                            <input type="text" id="competitorSearch" placeholder="Search by business name or service..." class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+                            <table class="w-full text-sm text-left text-gray-500 table-sortable">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                    <tr>
+                                        <th scope="col" class="py-3 px-6" data-sort="name">Business Name</th>
+                                        <th scope="col" class="py-3 px-6 text-center" data-sort="rating">Rating (/10)</th>
+                                        <th scope="col" class="py-3 px-6 text-center" data-sort="reviews">Reviews</th>
+                                        <th scope="col" class="py-3 px-6">Key Services (Summary)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="competitorTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="visuals" class="content-section">
+                    <div class="animate-fade-in">
+                        <h2 class="text-2xl font-bold mb-1 text-gray-900">Visual Insights</h2>
+                        <p class="mb-6 text-gray-600">Explore the competitive landscape through interactive charts. These visualizations help identify trends in competitor ratings and common service offerings, providing a quick overview of market standards and saturation.</p>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h3 class="text-lg font-semibold text-center mb-2">Competitor Rating Distribution</h3>
+                                <div class="chart-container">
+                                    <canvas id="ratingDistributionChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h3 class="text-lg font-semibold text-center mb-2">Most Common Services Offered</h3>
+                                <div class="chart-container">
+                                    <canvas id="servicesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="opportunities" class="content-section">
+                    <div class="animate-fade-in">
+                        <h2 class="text-2xl font-bold mb-1 text-gray-900">Strategic Opportunities</h2>
+                        <p class="mb-6 text-gray-600">By analyzing the potential weaknesses and commonalities among existing competitors, we can identify strategic opportunities for your new business to differentiate itself and capture market share. This section outlines key areas where you can excel.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start p-5 bg-white rounded-lg shadow-md">
+                                <div class="flex-shrink-0 mr-4 mt-1">
+                                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 text-blue-600 font-bold text-lg">1</div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">Address Communication Gaps</h3>
+                                    <p class="mt-1 text-gray-600">Several competitors show minor communication difficulties or delays. A new business can differentiate by prioritizing proactive, clear, and consistent communication with customers at every stage of the service.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-5 bg-white rounded-lg shadow-md">
+                                 <div class="flex-shrink-0 mr-4 mt-1">
+                                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 text-blue-600 font-bold text-lg">2</div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">Optimize Parts & Logistics</h3>
+                                    <p class="mt-1 text-gray-600">Delays due to parts are a recurring weakness. Implementing a robust inventory management system or establishing strong supplier relationships for rapid part acquisition can significantly improve service speed and customer satisfaction.</p>
+                                </div>
+                            </div>
+                             <div class="flex items-start p-5 bg-white rounded-lg shadow-md">
+                                 <div class="flex-shrink-0 mr-4 mt-1">
+                                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 text-blue-600 font-bold text-lg">3</div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">Target Specific Niche Markets</h3>
+                                    <p class="mt-1 text-gray-600">While some competitors have broad offerings, a new business could specialize further (e.g., historic window restoration, smart glass installation, or highly specific commercial glazing) to become the go-to expert in a less saturated segment.</p>
+                                </div>
+                            </div>
+                             <div class="flex items-start p-5 bg-white rounded-lg shadow-md">
+                                 <div class="flex-shrink-0 mr-4 mt-1">
+                                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 text-blue-600 font-bold text-lg">4</div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">Enhance After-Sales Support</h3>
+                                    <p class="mt-1 text-gray-600">While some offer guarantees, a truly exceptional after-sales service, including proactive check-ins or extended warranties, can build unparalleled loyalty and positive word-of-mouth in a market where "good" is the norm.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <div id="competitorModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-bg hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto" id="modalContent">
+            <div class="p-6">
+                <div class="flex justify-between items-start">
+                    <h3 id="modalName" class="text-2xl font-bold text-gray-900"></h3>
+                    <button id="closeModal" class="text-gray-400 hover:text-gray-600">&times;</button>
+                </div>
+                <div class="mt-2 flex items-center space-x-4">
+                    <p class="text-yellow-500 font-bold text-lg">⭐ <span id="modalRating"></span></p>
+                    <p class="text-gray-500">based on <span id="modalReviews"></span> reviews</p>
+                </div>
+                <div class="mt-4 border-t pt-4">
+                    <h4 class="font-semibold text-gray-800 mb-2">Key Differentiator / USP:</h4>
+                    <p id="modalUsp" class="text-gray-600 bg-gray-50 p-3 rounded-md"></p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="font-semibold text-gray-800 mb-2">Core Services:</h4>
+                    <ul id="modalServices" class="list-disc list-inside text-gray-600 space-y-1"></ul>
+                </div>
+                <div class="mt-4">
+                    <h4 class="font-semibold text-gray-800 mb-2">Potential Weaknesses/Notes:</h4>
+                    <p id="modalWeaknesses" class="text-gray-600 bg-red-50 p-3 rounded-md"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const competitorData = [
+            { name: 'Cloudy2Clear Windows', rating: 9.6, reviews: 543, services: ['DGU Repair', 'uPVC Repair', 'Glass Replacement', 'Triple Glazing', 'Misted DGU Repair', 'Soundproofing'], usp: '"Replace the pane, not the frame" philosophy (eco-friendly, cost-saving), nationwide company, 25-year guarantee on all glass replacements, Which? Trusted Trader, free quotes, 24/7 contact', weaknesses: 'Focus on "repair, not replace" might limit full frame replacement opportunities.' },
+            { name: 'Swift Glass And Glazing LTD', rating: 9.93, reviews: 679, services: ['DGU Repair', 'Cat Flap Installation', 'Traditional Glazing', 'Glass Cutting', 'Aluminium Store Fronts'], usp: 'Over 25 years experience, commitment to high quality glass at competitive prices, first-class service, customer-first approach, delivery service, Checkatrade member, upgrades existing DGU without replacing frames, free estimates', weaknesses: 'None explicitly stated in research.' },
+            { name: 'Amh Organisation Limited', rating: 9.85, reviews: 67, services: ['DGU Repair', 'Window Fitting', 'Porch Repair', 'Secondary Glazing', 'Conservatory Repairs'], usp: 'High rating indicates strong customer satisfaction.', weaknesses: 'None explicitly stated in research.' },
+            { name: 'The Window And Door Repair Man', rating: 9.98, reviews: 48, services: ['DGU Repair', 'Conservatory Repairs', 'Composite Door Repair', 'Emergency Service', 'Cat Flaps'], usp: 'Exceptionally high rating from customer reviews.', weaknesses: 'None explicitly stated in research.' },
+            { name: 'Surrey Door Specialist Ltd', rating: 10, reviews: 137, services: ['DGU Repair', 'Loft Window Installation', 'Door Canopies', 'Dog Flaps', 'Patio Doors'], usp: 'Perfect 10 rating.', weaknesses: 'None explicitly stated in research.' },
+            { name: 'Cove Glass', rating: 9.94, reviews: 225, services: ['DGU Repair', 'Bifold Door Repair', 'Exterior Door Installation', 'Frosted Windows', 'Glass Replacement'], usp: 'High customer satisfaction.', weaknesses: 'Some online information refers to unrelated products (glassware, security sensors), potentially causing brand confusion.' },
+            { name: 'Camberley Windows Limited', rating: 9.92, reviews: 377, services: ['DGU Repair', 'Conservatory Repairs', 'uPVC Window Repair', 'Bifold Door Installation', 'Misted DGU'], usp: 'CERTASS Registered, QANW Insurance Bank Guarantees, experienced staff, aims to exceed customer expectations, professional after-sales service, covers Camberley, Yateley, Blackwater, Frimley, Woking, Fleet, etc.', weaknesses: 'Occasional issues such as keys not being left for windows, minor communication difficulties, and delays due to parts.' },
+            { name: 'Camberley Glass & Windows', rating: 9.71, reviews: 553, services: ['Glass Replacement', 'Conservatory Installation', 'Orangeries', 'Shop Fronts', 'Emergency Glazing', 'Bespoke Mirrors'], usp: '"The Original Since 1965" (60+ years experience), 20-year guarantees on many products, exceptional after-sales care, FENSA registered, free no-obligation quotes, BSI, UKAS, PASMA member', weaknesses: 'Some customer feedback mentions issues with parts being delayed.' },
+            { name: 'Rocks Locks', rating: 10, reviews: 197, services: ['uPVC Lock Mechanisms', 'Emergency Glazing', 'Boarding Up', 'Handle/Frame Repair', 'Patio Door Locks'], usp: 'Primarily locksmith, 24/7 emergency service, fixes 95% of issues within an hour (extensive spare parts), no call-out charges, competitive rates, free no-obligation quote, Checkatrade approved, fully guaranteed, serves Surrey, Hampshire, Berkshire', weaknesses: 'Primarily a locksmith service, glazing may be a secondary focus.' },
+            { name: 'Cottrell\'s Windows & Doors', rating: 9.9, reviews: 117, services: ['Double Glazing Repair', 'Conservatory Installation', 'Porch Installation', 'UPVC Doors Installation', 'Glass Replacement'], usp: 'High customer satisfaction.', weaknesses: 'None explicitly stated in research.' },
+            { name: 'Woodbury Windows Ltd', rating: 9.89, reviews: 146, services: ['Double Glazing Repair', 'Conservatory Installation', 'Windows and Doors', 'French Doors Installation'], usp: 'High customer satisfaction.', weaknesses: 'None explicitly stated in research.' },
+            { name: 'Rushmoor Windows and Doors Ltd', rating: 9.89, reviews: 324, services: ['Double Glazing Repair', 'Door Canopies', 'Loft Windows Repair', 'Misted Double Glazing', 'Glass Replacement'], usp: 'High customer satisfaction.', weaknesses: 'None explicitly stated in research.' },
+            { name: 'Conservatory Solutions', rating: 10, reviews: 56, services: ['Double Glazing Repair', 'Wooden Sash Windows Installation', 'Bay Windows Installation', 'Aluminium Windows Installation', 'Glass Replacement', 'Stained Glass'], usp: 'Perfect 10 rating.', weaknesses: 'None explicitly stated in research.' },
+            { name: 'CQ Windows', rating: 10, reviews: 160, services: ['Double Glazing Repair', 'Timber / Wooden Windows Installation', 'Dog Flaps', 'French Doors Installation'], usp: 'Perfect 10 rating.', weaknesses: 'None explicitly stated in research.' },
+            { name: 'Unique Glazing', rating: 9.67, reviews: 85, services: ['Double Glazing Installation/Repair', 'Secondary Glazing', 'uPVC windows', 'Front/Back/French/Patio/Bifold/Composite doors', 'Conservatories', 'Porches', 'Replacement units', 'Roof windows', 'Aluminium glazing'], usp: 'Vetted and approved by TrustATrader, high quality and energy efficient products, experienced and reliable, no missed appointments, TrustATrader Guarantee, FENSA registered, competitive prices, free no-obligation quotes, insurance with Zurich, part of Unique Group of Companies', weaknesses: 'One customer mentioned "a little confusion on the day the work was carried out".' },
+            { name: 'Windowfix Services Limited', rating: 9.97, reviews: 312, services: ['Glass Restoration', 'Glazier services', 'Glass Replacement', 'Misted Double Glazing repair', 'Cat/Dog flaps', 'Glass upgrades to energy-saving glass', 'Installation/Repair of various windows/doors (Aluminium, Bay, Bifold, Composite, Exterior, Fire, French, Loft, Patio, Porches, Timber/Wooden, uPVC), Conservatory Installation/Repairs', 'Double/Triple Glazing', 'Draught Proofing', 'Emergency Service', 'Frosted Windows', 'Secondary Glazing', 'Locks, hinges, and handles replacement', 'Window/door overhaul/servicing', 'Re-sealing/masticing', 'Doors re-alignment', 'Supply and fitting of quality UPVC windows and doors', 'Supply and fitting of aluminum Bi-fold doors', 'Fitting of quality composite doors', 'Conservatory Glass Heat Reduction Film', 'Orangeries'], usp: 'High customer satisfaction, experienced owner (24 years), customer-centric approach, comprehensive service range, emergency service, free estimates, no call-out fee, Checkatrade vetted, polite, friendly, respectful of property', weaknesses: 'None explicitly stated in research.' },
+            { name: 'Glaze-Fix Windows & Doors Ltd', rating: 10, reviews: 655, services: ['Double glazing installation/repair', 'uPVC/Timber/Aluminium windows/doors installation/repair', 'Bay/Bifold/Composite/Exterior/Patio/French/Stable doors', 'Glass replacement', 'Misted DGU', 'Triple glazing', 'Window fitters', 'Conservatory repairs', 'Emergency service', 'Handles/locks/hinge repairs', 'New window/door systems', 'Cat/Dog flaps', 'Emergency boarding'], usp: 'High customer satisfaction, experienced family business (30+ years), customization, comprehensive service, local reach (Basingstoke, Reading, Newbury, Alton, Winchester, Andover), ethical advice ("repair, not replace"), Checkatrade vetted, 24-hour call-out, free home survey, FENSA member, all work guaranteed, no call out charge, free estimates', weaknesses: 'None explicitly stated in research.' },
+            { name: 'Surrey Glaziers', rating: null, reviews: null, services: ['Window repair (single, double, triple-glazed, wooden, sash, sliding aluminum, uPVC)', 'broken panes', 'leaks', 'jammed windows', 'faulty fixings (locks, handles, hinges)', 'rubber seals', 'draught excluders', 'condensation', 'windows not opening/closing properly', 'Specialized wooden sash window services'], usp: '24/7 emergency response, accredited and guaranteed work, "repair first" approach, no hidden charges, detailed estimates for extra expenses, qualified carpenters for wooden sash windows, instant quote via WhatsApp', weaknesses: 'Some reviews for related glaziers in Surrey mention "a bit pricy" or "attention to detail a little lacking".' },
+            { name: 'Able Group', rating: 4.8, reviews: 3000, services: ['Emergency window glass repair', 'window replacement/installation', 'boarding up', 'double glazed units', 'broken window repair', 'remove and refit glass', 'sash window repair', 'stained glass and led glass repairs', 'uPVC door repair'], usp: 'Fast response (under 90 minutes for emergencies), no call-out charge, pay on completion, 24/7 availability, experienced and certified glaziers, comprehensive services, highly recommended, serves Farnborough, Aldershot, Blackwater, Camberley, Woking, etc.', weaknesses: 'Being a large group might imply less personalized service than smaller local firms.' },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const sections = document.querySelectorAll('.content-section');
+            const competitorTableBody = document.getElementById('competitorTableBody');
+            const competitorSearchInput = document.getElementById('competitorSearch');
+            const modal = document.getElementById('competitorModal');
+            const closeModalBtn = document.getElementById('closeModal');
+            let currentSort = { column: 'rating', direction: 'desc' };
+            
+            function switchTab(tab) {
+                tabs.forEach(t => {
+                    t.classList.remove('tab-active');
+                    t.classList.add('tab-inactive');
+                });
+                tab.classList.add('tab-active');
+                tab.classList.remove('tab-inactive');
+
+                sections.forEach(s => {
+                    s.classList.remove('active');
+                });
+
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            }
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => switchTab(tab));
+            });
+
+            function renderCompetitorTable(filterText = '') {
+                competitorTableBody.innerHTML = '';
+                const filteredData = competitorData.filter(c => 
+                    c.name.toLowerCase().includes(filterText.toLowerCase()) ||
+                    c.services.some(s => s.toLowerCase().includes(filterText.toLowerCase()))
+                );
+
+                const sortedData = [...filteredData].sort((a, b) => {
+                    const valA = a[currentSort.column];
+                    const valB = b[currentSort.column];
+
+                    if (typeof valA === 'string') {
+                        return currentSort.direction === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                    }
+                    if (valA === null || valB === null) {
+                        return 0; // Handle nulls in sorting
+                    }
+                    return currentSort.direction === 'asc' ? valA - valB : valB - valA;
+                });
+
+                sortedData.forEach(c => {
+                    const row = document.createElement('tr');
+                    row.className = 'bg-white border-b hover:bg-gray-50 cursor-pointer';
+                    row.innerHTML = `
+                        <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">${c.name}</td>
+                        <td class="py-4 px-6 text-center">${c.rating !== null ? c.rating.toFixed(2) : 'N/A'}</td>
+                        <td class="py-4 px-6 text-center">${c.reviews !== null ? c.reviews : 'N/A'}</td>
+                        <td class="py-4 px-6">${c.services.slice(0, 3).join(', ')}${c.services.length > 3 ? '...' : ''}</td>
+                    `;
+                    row.addEventListener('click', () => showModal(c));
+                    competitorTableBody.appendChild(row);
+                });
+            }
+            
+            function showModal(competitor) {
+                document.getElementById('modalName').textContent = competitor.name;
+                document.getElementById('modalRating').textContent = competitor.rating !== null ? competitor.rating.toFixed(2) : 'N/A';
+                document.getElementById('modalReviews').textContent = competitor.reviews !== null ? competitor.reviews : 'N/A';
+                document.getElementById('modalUsp').textContent = competitor.usp || 'No specific USP mentioned.';
+                const servicesList = document.getElementById('modalServices');
+                servicesList.innerHTML = '';
+                if (competitor.services && competitor.services.length > 0) {
+                    competitor.services.forEach(service => {
+                        const li = document.createElement('li');
+                        li.textContent = service;
+                        servicesList.appendChild(li);
+                    });
+                } else {
+                    const li = document.createElement('li');
+                    li.textContent = 'No specific services listed.';
+                    servicesList.appendChild(li);
+                }
+                document.getElementById('modalWeaknesses').textContent = competitor.weaknesses || 'No specific weaknesses noted.';
+                modal.classList.remove('hidden');
+                setTimeout(() => modal.style.opacity = 1, 10);
+            }
+
+            function hideModal() {
+                 modal.style.opacity = 0;
+                 setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+
+            closeModalBtn.addEventListener('click', hideModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    hideModal();
+                }
+            });
+
+            document.querySelectorAll('.table-sortable th').forEach(header => {
+                header.addEventListener('click', () => {
+                    const column = header.dataset.sort;
+                    const direction = (currentSort.column === column && currentSort.direction === 'asc') ? 'desc' : 'asc';
+                    currentSort = { column, direction };
+                    renderCompetitorTable(competitorSearchInput.value);
+                });
+            });
+
+            competitorSearchInput.addEventListener('input', (e) => {
+                renderCompetitorTable(e.target.value);
+            });
+
+            renderCompetitorTable();
+            
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    },
+                    x: {
+                         ticks: {
+                            maxRotation: 45,
+                            minRotation: 0,
+                            callback: function(value, index, values) {
+                                const label = this.getLabelForValue(value);
+                                return label.length > 16 ? label.substring(0, 13) + '...' : label;
+                            }
+                        }
+                    }
+                }
+            };
+
+            const ratingBrackets = {
+                '9.0-9.4': competitorData.filter(c => c.rating >= 9.0 && c.rating <= 9.4).length,
+                '9.5-9.9': competitorData.filter(c => c.rating >= 9.5 && c.rating <= 9.9).length,
+                '10': competitorData.filter(c => c.rating === 10).length,
+                'N/A': competitorData.filter(c => c.rating === null).length,
+            };
+
+            new Chart(document.getElementById('ratingDistributionChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(ratingBrackets),
+                    datasets: [{
+                        label: 'Number of Competitors',
+                        data: Object.values(ratingBrackets),
+                        backgroundColor: ['#60a5fa', '#3b82f6', '#1d4ed8', '#9ca3af'],
+                        borderColor: ['#3b82f6', '#2563eb', '#1e40af', '#6b7280'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...chartOptions,
+                    scales: { y: { ticks: { stepSize: 1 } }, x: {} },
+                     plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.parsed.y} companies`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const serviceCounts = {};
+            competitorData.forEach(comp => {
+                if (comp.services) {
+                    comp.services.forEach(service => {
+                        const normalizedService = service.split('(')[0].trim(); // Remove parenthetical details
+                        serviceCounts[normalizedService] = (serviceCounts[normalizedService] || 0) + 1;
+                    });
+                }
+            });
+
+            const sortedServices = Object.entries(serviceCounts)
+                .sort(([,a],[,b]) => b - a)
+                .slice(0, 10); // Top 10 services
+
+            new Chart(document.getElementById('servicesChart'), {
+                type: 'bar',
+                data: {
+                    labels: sortedServices.map(s => s[0]),
+                    datasets: [{
+                        label: 'Number of Companies Offering',
+                        data: sortedServices.map(s => s[1]),
+                        backgroundColor: '#34d399',
+                        borderColor: '#059669',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...chartOptions,
+                    indexAxis: 'y',
+                    scales: { x: { ticks: { stepSize: 1 } }, y: {} },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Offered by ${context.parsed.x} companies`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
